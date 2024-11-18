@@ -133,38 +133,23 @@ int vTipoReproduccion[], int vTipoAdaptacion[], int vTipoCiclo[], int* contadorD
 
 int main() {
 
-    //! --------------------- ARRAYS ---------------------
+    //! --------------------- GLOBAL VARS ---------------------
 
-    //* Year when each seed was incorporated into the bank
-    int vAnyo[N_SEMILLAS] = {0}; // Año de incorporación al banco
+    //* Arrays to store information about each seed (from semillas.txt)
+    int vAnyo[N_SEMILLAS] = {0};           // Year of incorporation into the bank
+    int vCaducidad[N_SEMILLAS] = {0};      // Expiration year of each seed
+    int vNumSemillas[N_SEMILLAS] = {0};    // Number of seeds in the sample
+    int vSeccion[N_SEMILLAS] = {0};        // Section number where each seed is stored
+    int vRiesgo[N_SEMILLAS] = {0};         // Extinction risk level of each seed
+    int vTipoCrecimiento[N_SEMILLAS] = {0}; // Growth type of each seed
+    int vTipoReproduccion[N_SEMILLAS] = {0}; // Reproduction type of each seed
+    int vTipoAdaptacion[N_SEMILLAS] = {0};  // Environmental adaptation type of each seed
+    int vTipoCiclo[N_SEMILLAS] = {0};       // Life cycle type of each seed
 
-    //* Expiration year for each seed
-    int vCaducidad[N_SEMILLAS] = {0}; // Año de caducidad
-
-    //* Number of samples for each seed
-    int vNumSemillas[N_SEMILLAS] = {0}; // Cantidad de semillas en el banco
-
-    //* Section in which each seed is located
-    int vSeccion[N_SEMILLAS] = {0}; // Número de sección en el banco
-
-    //* Risk level of extinction for each seed
-    int vRiesgo[N_SEMILLAS] = {0}; // Nivel de riesgo de extinción
-
-    //* Growth type of each seed
-    int vTipoCrecimiento[N_SEMILLAS] = {0}; // Tipo de planta según crecimiento
-
-    //* Reproduction type of each seed
-    int vTipoReproduccion[N_SEMILLAS] = {0}; // Tipo de planta según reproducción
-
-    //* Environmental adaptation of each seed
-    int vTipoAdaptacion[N_SEMILLAS] = {0}; // Tipo de planta según adaptación al ambiente
-
-    //* Life cycle of each seed
-    int vTipoCiclo[N_SEMILLAS] = {0}; // Tipo de planta según ciclo de vida
-
+    //* Counters for donated and non-donated seeds
     int contadorDonadas, contadorNoDonadas = 0;
 
-    //! --------------------- ARRAYS END ---------------------
+    //! --------------------- GLOBAL VARS END ---------------------
 
     // Call the function to read data from the file
     // Returns an error if file cannot be opened
@@ -179,7 +164,8 @@ int main() {
 
     do {
 
-        menu(&menu_option);
+        menu(&menu_option); // Display menu and get user's choice
+
 
         switch (menu_option) {
 
@@ -229,7 +215,7 @@ int main() {
 
         }
 
-    } while(menu_option < 0 || menu_option > 4);
+    } while(menu_option != 0);
 
     // print_constants_info(); //print constant values
 
@@ -520,6 +506,7 @@ int lee_datos(int vAnyo[], int vCaducidad[], int vNumSemillas[], int vSeccion[],
 //* Menu function with input validation
 void menu(int *memory_of_menu_option) {
 
+        printf("\n\n");
         printf("--------------- Menu de opciones -----------------------\n");
         printf("1. Semillas de especies en peligro de extincion.\n");
         printf("2. Caducidad de semillas.\n");
@@ -534,6 +521,8 @@ void menu(int *memory_of_menu_option) {
             *memory_of_menu_option = -1; // Assign an invalid value if input is not a number
             while (getchar() != '\n');   // Clear the input buffer
         }
+
+        printf("\n\n");
 }
 
 
