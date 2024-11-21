@@ -229,7 +229,10 @@ void peligro_extincion(int vRiesgo[], int vTipoCrecimiento[]) {
 
     int count_total_riesgo_extremo = 0;
 
+    //Total with riesgo extremo by type
     int count_by_type[NUM_OF_TYPES_OF_SEEDS] = {0}; // Index 0: ARBOL - 1, 1: ARBUSTO - 1, 2: HIERBA - 1, 3: PLANTA_TREPADORA - 1
+    //Total by type
+    int count_by_type_total[NUM_OF_TYPES_OF_SEEDS] = {0}; // Index 0: ARBOL - 1, 1: ARBUSTO - 1, 2: HIERBA - 1, 3: PLANTA_TREPADORA - 1
     float percentages[NUM_OF_TYPES_OF_SEEDS] = {0}; // Index 0: ARBOL - 1, 1: ARBUSTO - 1, 2: HIERBA - 1, 3: PLANTA_TREPADORA - 1
 
     const char *type_names[] = {"arboles", "arbustos", "hierbas", "plantas trepadoras"};
@@ -242,6 +245,8 @@ void peligro_extincion(int vRiesgo[], int vTipoCrecimiento[]) {
             count_by_type[vTipoCrecimiento[i] - 1]++;
         }
 
+        count_by_type_total[vTipoCrecimiento[i] - 1]++;
+
     }
 
     //prevents division by 0
@@ -252,7 +257,7 @@ void peligro_extincion(int vRiesgo[], int vTipoCrecimiento[]) {
 
 
     for (int i = 0; i < NUM_OF_TYPES_OF_SEEDS; i++) {
-        percentages[i] = (count_by_type[i] / (float) count_total_riesgo_extremo * 100);
+        percentages[i] = (count_by_type[i] / (float) count_by_type_total[i] * 100);
     }
 
     //Find type with highest risk:
@@ -272,7 +277,7 @@ void peligro_extincion(int vRiesgo[], int vTipoCrecimiento[]) {
     }
 
     // Print the plant type with the highest percentage of endangered species
-    printf("\nEl mayor porcentaje de especies en peligro de extincion corresponde a %s %.1f%%\n", type_names[index_of_highest_risk], percentages[index_of_highest_risk]);
+    printf("\nEl mayor porcentaje de especies en peligro de extincion corresponde a %s (%.1f%% del total de %s)\n", type_names[index_of_highest_risk], percentages[index_of_highest_risk], type_names[index_of_highest_risk]);
 
 }
 
@@ -401,7 +406,7 @@ int especies_bioma(int vSeccion[], int vAnyo[], int vCaducidad[]) {
         }
     }
     
-    printf("El bioma con mayor porcentaje de semillas en el banco es: %s (semillas %d, %.1f%% del total)\n", bioma_names[index_of_highest_biome], biomas[index_of_highest_biome], percentage_biomas[index_of_highest_biome]);
+    printf("El bioma con mayor porcentaje de semillas en el banco es %d: %s (semillas %d, %.1f%% del total)\n", index_of_highest_biome + 1 ,bioma_names[index_of_highest_biome], biomas[index_of_highest_biome], percentage_biomas[index_of_highest_biome]);
 
     return 0;
 }
